@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GURZANG Essay Competition – Registration</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f8f6ee; --card:#ffffff; --ink:#1c2b2a; --muted:#6b7775;
+    --teal:#0f5e6b; --green:#2f7d4f; --gold:#d6a84a; --line:#e2ded0;
+    --err:#c0392b; --ok:#2f7d4f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Poppins',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  header{background:linear-gradient(120deg,var(--teal),var(--green) 60%,var(--gold));color:#fff;text-align:center;padding:42px 20px 56px}
+  .logo{display:block;width:min(240px,62%);height:auto;margin:0 auto 18px;border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.22)}
+  header h1{margin:0 0 6px;font-size:clamp(1.5rem,4vw,2.3rem);letter-spacing:.5px}
+  header p{margin:0;opacity:.92;font-size:.98rem}
+  .wrap{max-width:760px;margin:-32px auto 60px;padding:0 16px}
+  form{background:var(--card);border-radius:18px;box-shadow:0 10px 40px rgba(15,94,107,.12);padding:28px}
+  fieldset{border:0;padding:0;margin:0 0 28px}
+  legend{font-weight:600;font-size:1.1rem;color:var(--teal);padding:0 0 10px;border-bottom:2px solid var(--gold);margin-bottom:16px;width:100%}
+  label{display:block;font-weight:500;font-size:.92rem;margin-bottom:6px}
+  .req{color:var(--err)} .opt{color:var(--muted);font-weight:400;font-size:.82rem}
+  .field{margin-bottom:16px}
+  input[type=text],input[type=tel],input[type=email],select{
+    width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font:inherit;background:#fff;color:var(--ink);transition:.15s}
+  input:focus,select:focus,.dd-btn:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(15,94,107,.15)}
+  input[type=file]{width:100%;padding:10px;border:1.5px dashed var(--line);border-radius:10px;background:#fcfbf7;font:inherit;font-size:.88rem}
+  .hint{font-size:.78rem;color:var(--muted);margin-top:4px}
+  .error{font-size:.8rem;color:var(--err);margin-top:4px;display:none}
+  .invalid input,.invalid select,.invalid .dd-btn{border-color:var(--err)}
+  .invalid .error{display:block}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:600px){.row{grid-template-columns:1fr} form{padding:20px}}
+
+  /* multi-select dropdown */
+  .dd{position:relative}
+  .dd-btn{width:100%;text-align:left;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font:inherit;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;color:var(--ink)}
+  .dd-btn span.ph{color:var(--muted)}
+  .dd-panel{position:absolute;z-index:20;left:0;right:0;top:calc(100% + 6px);background:#fff;border:1.5px solid var(--line);border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.12);max-height:280px;overflow:auto;display:none}
+  .dd.open .dd-panel{display:block}
+  .dd-item{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;margin:0;font-weight:400}
+  .dd-item:hover{background:#f3f7f4}
+  .dd-item input{width:18px;height:18px;accent-color:var(--green)}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .chip{background:#e8f2ec;color:var(--green);border-radius:20px;padding:3px 12px;font-size:.8rem;font-weight:500}
+
+  .topic-upload{background:#faf9f3;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:14px;margin-bottom:12px}
+  .topic-upload label{color:var(--teal)}
+
+  .price{background:linear-gradient(120deg,rgba(15,94,107,.08),rgba(214,168,74,.15));border-radius:12px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+  .price small{color:var(--muted);display:block;font-size:.78rem}
+  .price strong{font-size:1.6rem;color:var(--teal)}
+
+  .bank{background:#0f5e6b;color:#fff;border-radius:12px;padding:18px 20px;margin-bottom:16px}
+  .bank h3{margin:0 0 10px;font-size:1rem;color:var(--gold);letter-spacing:.5px}
+  .bank div{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);font-size:.9rem;flex-wrap:wrap}
+  .bank div:last-of-type{border:0}
+  .bank b{font-weight:500;opacity:.8}
+  .bank span{font-weight:600;word-break:break-all}
+  .copy{background:var(--gold);border:0;border-radius:6px;padding:2px 10px;font:inherit;font-size:.72rem;font-weight:600;cursor:pointer;margin-left:8px;color:#222}
+
+  .check{display:flex;gap:10px;align-items:flex-start;font-weight:400}
+  .check input{margin-top:4px;width:18px;height:18px;accent-color:var(--green)}
+  a{color:var(--teal);font-weight:500}
+
+  button.submit{width:100%;padding:15px;border:0;border-radius:12px;font:inherit;font-weight:600;font-size:1.05rem;color:#fff;cursor:pointer;background:linear-gradient(120deg,var(--teal),var(--green));transition:.2s}
+  button.submit:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(15,94,107,.3)}
+  button.submit:disabled{opacity:.6;cursor:wait;transform:none}
+  .banner{display:none;background:#fdecea;color:var(--err);border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:.9rem}
+  footer{text-align:center;color:var(--muted);font-size:.8rem;padding:0 16px 30px}
+  footer .sub{opacity:.8;margin-top:2px}
+</style>
+</head>
+<body>
+
+<header>
+  <img class="logo" src="assets/gurzang-logo.jpg" alt="GURZANG logo" width="240" height="180">
+  <h1>GURZANG Essay Competition</h1>
+  <p>Registration Form · English · اردو · پښتو</p>
+</header>
+
+<div class="wrap">
+<form id="regForm" action="https://formsubmit.co/gurzang01@gmail.com" method="POST" enctype="multipart/form-data" novalidate>
+
+  <!-- FormSubmit settings -->
+  <input type="hidden" name="_subject" value="New GURZANG Essay Competition Registration">
+  <input type="hidden" name="_template" value="table">
+  <input type="hidden" name="_captcha" value="false">
+  <!-- After submission, send participant to your thank-you page (uncomment & edit): -->
+  <!-- <input type="hidden" name="_next" value="https://YOUR-SITE.com/thank-you.html"> -->
+  <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+  <input type="hidden" name="Selected Topics" id="selTopics">
+  <input type="hidden" name="Total Fee (PKR)" id="totalField">
+
+  <div class="banner" id="banner"></div>
+
+  <!-- 1. PERSONAL INFO -->
+  <fieldset>
+    <legend>1. Personal Information</legend>
+    <div class="field">
+      <label for="fullName">Full Name <span class="req">*</span></label>
+      <input type="text" id="fullName" name="Full Name" placeholder="Enter your full name" required>
+      <div class="error">Please enter your full name.</div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="wa">WhatsApp Number <span class="req">*</span></label>
+        <input type="tel" id="wa" name="WhatsApp Number" placeholder="e.g. 03001234567" required>
+        <div class="error">Enter a valid WhatsApp number (10–15 digits).</div>
+      </div>
+      <div class="field">
+        <label for="email">Email <span class="opt">(optional)</span></label>
+        <input type="email" id="email" name="Email" placeholder="you@example.com">
+        <div class="error">Enter a valid email address.</div>
+      </div>
+    </div>
+  </fieldset>
+
+  <!-- 2. LANGUAGE & TOPICS -->
+  <fieldset>
+    <legend>2. Language &amp; Topics</legend>
+    <div class="field">
+      <label for="lang">Essay Language <span class="req">*</span></label>
+      <select id="lang" name="Essay Language" required>
+        <option value="">— Select language —</option>
+        <option>English</option>
+        <option>Urdu (اردو)</option>
+        <option>Pashto (پښتو)</option>
+      </select>
+      <div class="error">Please select a language.</div>
+    </div>
+
+    <div class="field" id="topicField">
+      <label>Topics <span class="req">*</span> <span class="opt">(select one or more)</span></label>
+      <div class="dd" id="dd">
+        <button type="button" class="dd-btn" id="ddBtn" aria-haspopup="listbox">
+          <span class="ph" id="ddText">— Select topics —</span><span>▾</span>
+        </button>
+        <div class="dd-panel" id="ddPanel" role="listbox"></div>
+      </div>
+      <div class="chips" id="chips"></div>
+      <div class="hint">1 topic = Rs. 499 · each additional topic = + Rs. 99</div>
+      <div class="error">Please select at least one topic.</div>
+    </div>
+
+    <div id="uploads"></div>
+
+    <div class="price">
+      <div><small id="priceBreak">No topic selected</small>Total Fee</div>
+      <strong id="total">Rs. 0</strong>
+    </div>
+  </fieldset>
+
+  <!-- 3. PAYMENT -->
+  <fieldset>
+    <legend>3. Payment</legend>
+    <div class="bank">
+      <h3>PAYMENT INSTRUCTIONS</h3>
+      <div><b>Bank</b><span>BANK OF KHYBER</span></div>
+      <div><b>Account Name</b><span>MUHAMMAD ALYAN KHAN</span></div>
+      <div><b>Account No.</b><span>3008951372 <button type="button" class="copy" data-copy="3008951372">Copy</button></span></div>
+      <div><b>IBAN</b><span>PK45KHYB5208003008951372 <button type="button" class="copy" data-copy="PK45KHYB5208003008951372">Copy</button></span></div>
+    </div>
+    <p class="hint" style="margin-top:-4px">Pay the exact total shown above, then enter the transaction ID and upload your payment proof.</p>
+
+    <div class="field">
+      <label for="tid">Transaction ID <span class="req">*</span></label>
+      <input type="text" id="tid" name="Transaction ID" placeholder="Enter transaction / reference ID" required>
+      <div class="error">Transaction ID is required.</div>
+    </div>
+    <div class="field">
+      <label for="proof">Proof of Payment <span class="req">*</span></label>
+      <input type="file" id="proof" name="Payment Proof" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" required>
+      <div class="hint">PDF, JPG or PNG</div>
+      <div class="error" id="proofErr">Please upload your payment proof (PDF, JPG or PNG).</div>
+    </div>
+  </fieldset>
+
+  <!-- 4. TERMS -->
+  <fieldset>
+    <legend>4. Terms &amp; Conditions</legend>
+    <div class="field">
+      <label class="check">
+        <input type="checkbox" id="terms" name="Agreed to Terms" value="Yes" required>
+        <span>I have read and agree to the <a href="terms.html" target="_blank" rel="noopener">Terms &amp; Conditions</a> of the GURZANG Essay Competition.</span>
+      </label>
+      <div class="error">You must accept the terms to continue.</div>
+    </div>
+    <div class="field">
+      <label for="sign">Signature (type your full name) <span class="req">*</span></label>
+      <input type="text" id="sign" name="Digital Signature" placeholder="Type your full name as signature" required>
+      <div class="error">Please type your name as signature.</div>
+    </div>
+  </fieldset>
+
+  <button type="submit" class="submit" id="submitBtn">Submit Registration</button>
+</form>
+</div>
+
+<footer>
+  <div>© 2026 GURZANG. All rights reserved.</div>
+  <div class="sub">Essay Competitions · English · اردو · پښتو</div>
+</footer>
+
+<script>
+/* ====== EDIT YOUR TOPICS HERE ====== */
+const TOPICS = [
+  "Education & Society",
+  "Technology & the Future",
+  "Culture & Heritage",
+  "Environment & Climate",
+  "Youth & Leadership",
+  "Peace & Tolerance",
+  "Literature & Language"
+];
+/* ====== PRICING ====== */
+const BASE = 499, EXTRA = 99;
+const MAX_ESSAY = 30 * 1024 * 1024;   // 30 MB
+const MAX_PROOF = 10 * 1024 * 1024;   // 10 MB
+
+const $ = s => document.querySelector(s);
+const dd = $('#dd'), panel = $('#ddPanel'), uploads = $('#uploads');
+const selected = new Set();
+
+/* build dropdown + one upload block per topic (hidden until selected) */
+TOPICS.forEach((t, i) => {
+  const l = document.createElement('label');
+  l.className = 'dd-item';
+  l.innerHTML = `<input type="checkbox" value="${i}"><span>${t}</span>`;
+  panel.appendChild(l);
+
+  const u = document.createElement('div');
+  u.className = 'topic-upload field'; u.style.display = 'none'; u.id = 'up' + i;
+  u.innerHTML = `<label for="f${i}">Essay PDF — ${t} <span class="req">*</span></label>
+    <input type="file" id="f${i}" name="Essay PDF - ${t}" accept=".pdf,application/pdf" disabled>
+    <div class="hint">PDF only · max 30 MB</div>
+    <div class="error">Upload a PDF (max 30 MB) for this topic.</div>`;
+  uploads.appendChild(u);
+});
+
+$('#ddBtn').addEventListener('click', () => dd.classList.toggle('open'));
+document.addEventListener('click', e => { if (!dd.contains(e.target)) dd.classList.remove('open'); });
+
+panel.addEventListener('change', e => {
+  const i = +e.target.value;
+  const box = $('#up' + i), inp = $('#f' + i);
+  if (e.target.checked) { selected.add(i); box.style.display = ''; inp.disabled = false; inp.required = true; }
+  else { selected.delete(i); box.style.display = 'none'; inp.disabled = true; inp.required = false; inp.value = ''; box.classList.remove('invalid'); }
+  refresh();
+});
+
+function refresh() {
+  const n = selected.size;
+  const total = n ? BASE + (n - 1) * EXTRA : 0;
+  $('#total').textContent = 'Rs. ' + total.toLocaleString();
+  $('#priceBreak').textContent = n ? (n === 1 ? '1 topic × Rs. 499' : `Rs. 499 + ${n-1} extra × Rs. 99`) : 'No topic selected';
+  const names = [...selected].sort((a,b)=>a-b).map(i => TOPICS[i]);
+  $('#selTopics').value = names.join(', ');
+  $('#totalField').value = total;
+  $('#chips').innerHTML = names.map(x => `<span class="chip">${x}</span>`).join('');
+  const t = $('#ddText');
+  t.textContent = n ? n + (n === 1 ? ' topic selected' : ' topics selected') : '— Select topics —';
+  t.className = n ? '' : 'ph';
+  if (n) $('#topicField').classList.remove('invalid');
+}
+
+/* copy buttons */
+document.querySelectorAll('.copy').forEach(b => b.addEventListener('click', () => {
+  navigator.clipboard?.writeText(b.dataset.copy).then(() => { b.textContent = 'Copied!'; setTimeout(() => b.textContent = 'Copy', 1500); });
+}));
+
+/* validation */
+const mark = (el, bad) => { el.closest('.field').classList.toggle('invalid', bad); return bad; };
+
+function validate() {
+  let bad = 0;
+  bad += mark($('#fullName'), $('#fullName').value.trim().length < 3);
+  const digits = $('#wa').value.replace(/[\s\-+()]/g, '');
+  bad += mark($('#wa'), !/^\d{10,15}$/.test(digits));
+  const em = $('#email').value.trim();
+  bad += mark($('#email'), em !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em));
+  bad += mark($('#lang'), !$('#lang').value);
+  const noTopic = selected.size === 0;
+  $('#topicField').classList.toggle('invalid', noTopic); bad += noTopic;
+
+  selected.forEach(i => {
+    const f = $('#f' + i).files[0];
+    const ok = f && f.size <= MAX_ESSAY && (f.type === 'application/pdf' || /\.pdf$/i.test(f.name));
+    bad += mark($('#f' + i), !ok);
+  });
+
+  bad += mark($('#tid'), $('#tid').value.trim().length < 4);
+  const p = $('#proof').files[0];
+  const pok = p && p.size <= MAX_PROOF && /\.(pdf|jpe?g|png)$/i.test(p.name);
+  $('#proofErr').textContent = p && p.size > MAX_PROOF ? 'File too large (max 10 MB).' : 'Please upload your payment proof (PDF, JPG or PNG).';
+  bad += mark($('#proof'), !pok);
+  bad += mark($('#terms'), !$('#terms').checked);
+  bad += mark($('#sign'), $('#sign').value.trim().length < 3);
+  return bad === 0;
+}
+
+$('#regForm').addEventListener('submit', e => {
+  const banner = $('#banner');
+  if (!validate()) {
+    e.preventDefault();
+    banner.style.display = 'block';
+    banner.textContent = 'Please fix the highlighted fields and try again.';
+    document.querySelector('.invalid')?.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  banner.style.display = 'none';
+  const btn = $('#submitBtn'); btn.disabled = true; btn.textContent = 'Uploading… please wait';
+});
+refresh();
+</script>
+</body>
+</html>
