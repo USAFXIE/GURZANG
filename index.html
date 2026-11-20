@@ -51,6 +51,10 @@
 
   .topic-upload{background:#faf9f3;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:14px;margin-bottom:12px}
   .topic-upload label{color:var(--teal)}
+  .essay-instructions{background:#edf5f2;border:1px solid #cfe3da;border-radius:10px;padding:14px 16px;margin-bottom:16px;color:var(--ink);font-size:.86rem}
+  .essay-instructions strong{display:block;color:var(--teal);margin-bottom:4px}
+  .essay-instructions ul{margin:6px 0 0;padding-left:20px}
+  .essay-instructions li{margin:3px 0}
 
   .price{background:linear-gradient(120deg,rgba(15,94,107,.08),rgba(214,168,74,.15));border-radius:12px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
   .price small{color:var(--muted);display:block;font-size:.78rem}
@@ -85,7 +89,7 @@
 </header>
 
 <div class="wrap">
-<form id="regForm" action="cab1077035254bc214ab9cdfd9830554" method="POST" enctype="multipart/form-data" novalidate>
+<form id="regForm" action="formsubmit.co/cab1077035254bc214ab9cdfd9830554" method="POST" enctype="multipart/form-data" novalidate>
 
   <!-- FormSubmit settings -->
   <input type="hidden" name="_subject" value="New GURZANG Essay Competition Registration">
@@ -124,6 +128,15 @@
   <!-- 2. LANGUAGE & TOPICS -->
   <fieldset>
     <legend>2. Language &amp; Topics</legend>
+    <div class="essay-instructions">
+      <strong>Essay Instructions</strong>
+      <ul>
+        <li>Maximum 2000 words per essay.</li>
+        <li>Write a separate essay for each selected topic.</li>
+        <li>Upload each essay as a PDF.</li>
+        <li>All essay PDFs submitted together must not exceed 20 MB (not 20 MB per essay).</li>
+      </ul>
+    </div>
     <div class="field">
       <label for="lang">Essay Language <span class="req">*</span></label>
       <select id="lang" name="Essay Language" required>
@@ -220,7 +233,7 @@ const TOPICS = [
 ];
 /* ====== PRICING ====== */
 const BASE = 499, EXTRA = 99;
-const MAX_ESSAY = 30 * 1024 * 1024;   // 30 MB
+const MAX_ALL_ESSAYS = 20 * 1024 * 1024; // 20 MB total for all essays
 const MAX_PROOF = 10 * 1024 * 1024;   // 10 MB
 
 const $ = s => document.querySelector(s);
@@ -238,8 +251,8 @@ TOPICS.forEach((t, i) => {
   u.className = 'topic-upload field'; u.style.display = 'none'; u.id = 'up' + i;
   u.innerHTML = `<label for="f${i}">Essay PDF — ${t} <span class="req">*</span></label>
     <input type="file" id="f${i}" name="Essay PDF - ${t}" accept=".pdf,application/pdf" disabled>
-    <div class="hint">PDF only · max 30 MB</div>
-    <div class="error">Upload a PDF (max 30 MB) for this topic.</div>`;
+    <div class="hint">Maximum 2000 words · PDF only · all essays combined: max 20 MB</div>
+    <div class="error">Upload a PDF. All essay PDFs combined must not exceed 20 MB.</div>`;
   uploads.appendChild(u);
 });
 
@@ -288,9 +301,15 @@ function validate() {
   const noTopic = selected.size === 0;
   $('#topicField').classList.toggle('invalid', noTopic); bad += noTopic;
 
+  let allEssaySize = 0;
+  selected.forEach(i => {
+    allEssaySize += $('#f' + i).files[0]?.size || 0;
+  });
+
+  const essaysTooLarge = allEssaySize > MAX_ALL_ESSAYS;
   selected.forEach(i => {
     const f = $('#f' + i).files[0];
-    const ok = f && f.size <= MAX_ESSAY && (f.type === 'application/pdf' || /\.pdf$/i.test(f.name));
+    const ok = f && (f.type === 'application/pdf' || /\.pdf$/i.test(f.name)) && !essaysTooLarge;
     bad += mark($('#f' + i), !ok);
   });
 
